@@ -48,7 +48,7 @@ const range = {
 
 const getRandomAvatarNumber = makeUniqueRandomIntegerGenerator(range.avatarNumber.min, range.avatarNumber.max);
 
-const getRandomMockOffer = () => {
+const getRandomMockSimilarOffer = () => {
   const avatarNumber = getRandomAvatarNumber();
   const lat = range.getRandom('lat', LOCATION_DECIMAL);
   const lng = range.getRandom('lng', LOCATION_DECIMAL);
@@ -77,8 +77,8 @@ const getRandomMockOffer = () => {
   };
 };
 
-const getMockOffers = () => new Array(MOCK_OFFERS_LENGTH).fill().map(() => getRandomMockOffer());
+const getMockSimilarOffers = () => new Array(MOCK_OFFERS_LENGTH).fill().map(() => getRandomMockSimilarOffer());
 
 export {
-  getMockOffers
+  getMockSimilarOffers
 };

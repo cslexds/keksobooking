@@ -1,5 +1,2 @@
-import {
-  getMockOffers
-} from './mock.js';
-
-getMockOffers();
+import './offers.js';
+import './form.js';
