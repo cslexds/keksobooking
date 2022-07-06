@@ -1,5 +1,8 @@
 export const LOCATION_DECIMAL = 5;
 export const MOCK_OFFERS_LENGTH = 10;
+export const MIN_TITLE_LENGTH = 30;
+export const MIN_PRICE = 0;
+export const MAX_PRICE = 1000000000;
 
 export const TITLES = [
   'レイヴンツリー',
