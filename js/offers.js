@@ -1,11 +1,6 @@
-import { getMockSimilarOffers } from './mock.js';
-
-const mapCanvas = document.querySelector('.map__canvas');
 const offerPopupTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
-
-const similarOffers = getMockSimilarOffers();
 
 const offerTypeToReadable = {
   flat: 'Квартира' ,
@@ -58,6 +53,4 @@ const getOfferPopupElement = (offerData) => {
   return offerPopup;
 };
 
-const tempOfferPopup = getOfferPopupElement(similarOffers[0]);
-
-mapCanvas.appendChild(tempOfferPopup);
+export {getOfferPopupElement};

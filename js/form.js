@@ -1,7 +1,7 @@
 import { MAX_PRICE, MIN_TITLE_LENGTH } from './const.js';
+import { mainPinMarker } from './map.js';
 
 const adForm = document.querySelector('.ad-form');
-const mapForm = document.querySelector('.map__filters');
 
 const titleInput = adForm.querySelector('#title');
 const priceInput = adForm.querySelector('#price');
@@ -10,31 +10,7 @@ const roomNumberInput = adForm.querySelector('#room_number');
 const capacityInput = adForm.querySelector('#capacity');
 const timeInInput = adForm.querySelector('#timein');
 const timeOutInput = adForm.querySelector('#timeout');
-
-const disableForm = () => {
-  adForm.classList.add('ad-form--disabled');
-  for (const child of adForm.children) {
-    child.disabled = true;
-  }
-  mapForm.classList.add('map__filters--disabled');
-  for (const child of mapForm.children) {
-    child.disabled = true;
-  }
-};
-
-const enableForm = () => {
-  adForm.classList.remove('ad-form--disabled');
-  for (const child of adForm.children) {
-    child.disabled = false;
-  }
-  mapForm.classList.remove('map__filters--disabled');
-  for (const child of mapForm.children) {
-    child.disabled = false;
-  }
-};
-
-disableForm();
-enableForm();
+const adressInput = adForm.querySelector('#address');
 
 const typeToMinPrice = {
   'bungalow': 0,
@@ -105,3 +81,13 @@ timeInInput.addEventListener('input', (evt) => {
 timeOutInput.addEventListener('input', (evt) => {
   timeInInput.value = evt.target.value;
 });
+
+const getAdress = () => {
+  const mainPinMarkerLoc = mainPinMarker.getLatLng();
+  adressInput.value =`${mainPinMarkerLoc.lat.toFixed(5)}, ${mainPinMarkerLoc.lng.toFixed(5)}`;
+};
+
+mainPinMarker.on('moveend', () => {
+  getAdress();
+});
+
