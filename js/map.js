@@ -1,67 +1,87 @@
-import { getMockSimilarOffers } from './mock.js';
-import { getOfferPopupElement } from './offers.js';
+import {
+  InitMapView,
+  LOCATION_DECIMAL,
+  MAIN_PIN_ICON,
+  MAP_CONTAINER_ID,
+  PIN_ICON} from './const.js';
+import { getPopup } from './popup.js';
+import { createFetch } from './api.js';
+import { enableAdForm } from './ad-form.js';
 
-const map = L.map('map-canvas')
-  .on('load', () => {
-  })
-  .setView({
-    lat: 35.67620,
-    lng: 139.65030,
-  }, 13);
+const loadMap = () => {
+  const map = L.map(MAP_CONTAINER_ID)
+    .on('load', () => {
+      enableAdForm();
+    })
+    .setView({
+      lat: InitMapView.LAT,
+      lng: InitMapView.LNG,
+    }, InitMapView.ZOOM);
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
-
-const mainPinIcon = L.icon({
-  iconUrl: '../img/map-pins/main-pin.svg',
-  iconSize: [50, 50],
-  iconAnchor: [25, 50],
-});
-
-const pinIcon = L.icon({
-  iconUrl: '../img/map-pins/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
-
-const mainPinMarker = L.marker(
-  {
-    lat: 35.67620,
-    lng: 139.65030,
-  },
-  {
-    draggable: true,
-    icon: mainPinIcon,
-  },
-);
-
-mainPinMarker.addTo(map);
-
-const offers = getMockSimilarOffers();
-
-offers.forEach((offer) => {
-  const marker = L.marker(
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-      lat: offer.location.lat,
-      lng: offer.location.lng,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+
+  const mainPinMarker = L.marker(
+    {
+      lat: InitMapView.LAT,
+      lng: InitMapView.LNG,
     },
     {
-      icon: pinIcon,
+      draggable: true,
+      icon: MAIN_PIN_ICON,
     },
   );
 
-  marker
-    .addTo(map)
-    .bindPopup(
-      getOfferPopupElement(offer),
+  mainPinMarker.addTo(map);
+
+  const updateAdress = () => {
+    const adressInput = document.querySelector('#address');
+    const mainPinMarkerLoc = mainPinMarker.getLatLng();
+    adressInput.value =`${mainPinMarkerLoc.lat.toFixed(LOCATION_DECIMAL)}, ${mainPinMarkerLoc.lng.toFixed(LOCATION_DECIMAL)}`;
+  };
+
+  updateAdress();
+
+  mainPinMarker.on('moveend', () => {
+    updateAdress();
+  });
+
+
+  const initialMarkerGroup = L.layerGroup().addTo(map);
+
+  const createMarker = (data) => {
+    const marker = L.marker(
       {
-        keepInView: true,
+        lat: data.location.lat,
+        lng: data.location.lng,
+      },
+      {
+        icon: PIN_ICON,
       },
     );
-});
 
-export {mainPinMarker, map};
+    marker
+      .addTo(initialMarkerGroup)
+      .bindPopup(
+        getPopup(data),
+      );
+  };
+
+  const fetchAds = createFetch(
+    (ads) => {
+      ads
+        .slice(0, 10)
+        .forEach((ad) => createMarker(ad));
+    },
+    (err) => {
+      console.log(err);
+    });
+
+  fetchAds();
+};
+
+export { loadMap };

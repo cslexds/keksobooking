@@ -1,42 +1,42 @@
-export const LOCATION_DECIMAL = 5;
-export const MOCK_OFFERS_LENGTH = 10;
-export const MIN_TITLE_LENGTH = 30;
-export const MIN_PRICE = 0;
-export const MAX_PRICE = 1000000000;
+const LOCATION_DECIMAL = 5;
+const MAX_ADS_TO_SHOW = 10;
+const MIN_TITLE_LENGTH = 30;
+const MIN_PRICE = 0;
+const MAX_PRICE = 1000000000;
+const DATA_URL =  'https://23.javascript.pages.academy/keksobooking/data';
+const AD_FORM_CLASS_NAME = 'ad-form';
+const FILTER_FORM_CLASS_NAME = 'map__filters';
+const MAP_CONTAINER_ID = 'map-canvas';
 
-export const TITLES = [
-  'レイヴンツリー',
-  'アンダーウィン',
-  'メイストーン',
-  'コットンモア',
-  'ウィンカスター',
-];
+const InitMapView = {
+  LAT: 35.6741,
+  LNG: 139.7492,
+  ZOOM: 13,
+};
 
-export const TYPES = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-  'hotel',
-];
+const MAIN_PIN_ICON = L.icon({
+  iconUrl: '../img/map-pins/main-pin.svg',
+  iconSize: [50, 50],
+  iconAnchor: [25, 50],
+});
 
-export const CHECKS = [
-  '12:00',
-  '13:00',
-  '14:00',
-];
+const PIN_ICON = L.icon({
+  iconUrl: '../img/map-pins/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
 
-export const FEATURES = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner',
-];
-
-export const PHOTOS = [
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
-];
+export {
+  LOCATION_DECIMAL,
+  MAX_ADS_TO_SHOW,
+  MIN_TITLE_LENGTH,
+  MIN_PRICE,
+  MAX_PRICE,
+  InitMapView,
+  DATA_URL,
+  AD_FORM_CLASS_NAME,
+  FILTER_FORM_CLASS_NAME,
+  MAP_CONTAINER_ID,
+  MAIN_PIN_ICON,
+  PIN_ICON
+};

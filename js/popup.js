@@ -1,4 +1,4 @@
-const offerPopupTemplate = document.querySelector('#card')
+const popupTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
@@ -10,9 +10,9 @@ const offerTypeToReadable = {
   hotel: 'Отель',
 };
 
-const getOfferPopupElement = (offerData) => {
+const getPopup = (offerData) => {
   const {offer, author} = offerData;
-  const offerPopup = offerPopupTemplate.cloneNode(true);
+  const offerPopup = popupTemplate.cloneNode(true);
   const featuresList = offerPopup.querySelector('.popup__features');
   const photosList =  offerPopup.querySelector('.popup__photos');
   const photoTemplate =  photosList.querySelector('.popup__photo');
@@ -23,9 +23,10 @@ const getOfferPopupElement = (offerData) => {
   offerPopup.querySelector('.popup__type').textContent = offerTypeToReadable[offer.type];
   offerPopup.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   offerPopup.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+
   featuresList.querySelectorAll('li').forEach((element) => element.remove());
 
-  if (offer.features.length) {
+  if (offer.features !== undefined) {
     offer.features.forEach((feature) => {
       const featuresElement =  document.createElement('li');
       featuresElement.classList.add('popup__feature', `popup__feature--${feature}`);
@@ -38,7 +39,7 @@ const getOfferPopupElement = (offerData) => {
   offerPopup.querySelector('.popup__description').textContent = offer.description;
   photosList.querySelectorAll('img').forEach((element) => element.remove());
 
-  if (offer.photos.length) {
+  if (offer.photos !== undefined) {
     offer.photos.forEach((photo) => {
       const photoElement = photoTemplate.cloneNode(true);
       photoElement.src = photo;
@@ -53,4 +54,4 @@ const getOfferPopupElement = (offerData) => {
   return offerPopup;
 };
 
-export {getOfferPopupElement};
+export { getPopup };
