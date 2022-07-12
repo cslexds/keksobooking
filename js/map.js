@@ -7,6 +7,7 @@ import {
 import { getPopup } from './popup.js';
 import { createFetch } from './api.js';
 import { enableAdForm } from './ad-form.js';
+import { enableFilterForm } from './filter-form.js';
 
 const loadMap = () => {
   const map = L.map(MAP_CONTAINER_ID)
@@ -76,6 +77,8 @@ const loadMap = () => {
       ads
         .slice(0, 10)
         .forEach((ad) => createMarker(ad));
+
+      enableFilterForm(initialMarkerGroup, ads, createMarker);
     },
     (err) => {
       console.log(err);

@@ -1,5 +1,4 @@
 import { DATA_URL } from './const.js';
-import { enableFilterForm } from './filter-form.js';
 
 const createFetch = (onSuccess, onError) => () => fetch(
   DATA_URL,
@@ -13,9 +12,6 @@ const createFetch = (onSuccess, onError) => () => fetch(
   })
   .then((json) => {
     onSuccess(json);
-  })
-  .then(() => {
-    enableFilterForm();
   })
   .catch((err) => {
     onError(err);
